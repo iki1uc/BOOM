@@ -1,0 +1,8 @@
+﻿Ebene,Fehler,Ursache,Lösung
+CORE,Modul fehlt,Datei nicht geladen,Pfad prüfen
+ORBIT,Instabilität,GhostError,META‑System prüfen
+RAW,RAW mismatch,RAW‑Chain leer,RAW‑Loader prüfen
+ENERGY,Score=0,Energie fehlt,Energie‑Chain prüfen
+OPERATOR,falsches Symbol,Hardware mismatch,CSV prüfen
+STATIONEN,Null‑Station,Index falsch,Loader prüfen
+TECH.6E,Pipeline stoppt,fehlendes Modul,Deep‑Debug nutzen

@@ -1,0 +1,10 @@
+﻿Level,Name,Funktion
+L1,RAW‑Pilot,RAW‑Stabilisierung
+L2,Energie‑Pilot,Energie‑Optimierung
+L3,Orbit‑Pilot,Orbit‑Navigation
+L4,Operator‑Pilot,Operator‑Matching
+L5,Station‑Pilot,Stationen‑Routing
+L6,Meta‑Pilot,GhostError‑Neutralisierung
+L7,TECH6E‑Pilot,Pipeline‑Reparatur
+L8,KI‑Pilot,KI‑Training/Analyse
+L9,ULTRA‑Pilot,Vollautonomer Modus

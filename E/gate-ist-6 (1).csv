@@ -1,0 +1,7 @@
+﻿GATE,IST,SOLL,Bedeutung
+ALPHA,1,3,Start
+BETA,3,5,Weiter
+GAMMA,5,7,Weiter
+DELTA,7,9,Weiter
+EPSILON,9,0,Reset
+ZETA,0,1,Neustart

@@ -1,36 +1,40 @@
-# ARG3 – Artikulationsmodul · iki1uc
+# BORG‑TECH – Assimilationsmodul · iki1uc
 
 ## 1. Zweck
-ARG3 ist das Artikulationsmodul des iki1uc‑Systems.
-Es verbindet CSV‑Daten und WEBP‑Bilder mit dem Vector‑Grundsatz
-und erzeugt klare, einfache, stabile Bedeutungen.
+BORG‑TECH ist das Assimilationsmodul des iki1uc‑Systems.
+Es verbindet ARG3 mit einem maschinenlesbaren Codec
+und erweitert die Artikulation durch QI und IQQ.
 
-ARG3 lernt aus:
-- CSV‑Dateien (Struktur)
-- WEBP‑Dateien (Zustand)
-und artikuliert beide im Vector‑Modus.
+BORG‑TECH kann:
+- CSV-Dateien assimilieren
+- WEBP-Zustände assimilieren
+- ARG3 erweitern
+- RESPO als Codec nutzen
+- QI / IQQ anwenden
+- Zustände tief scannen
 
 ---
 
 ## 2. Vector‑Grundsatz
 G · M · A · R · Z · Q
 
-(G) Gravitation – Zentrum  
-(M) Magnetismus – Richtung  
-(A) Anziehung – Wertfluss  
-(R) Raumfluss – Continuum  
-(Z) Zustand – Phase  
-(Q) Quelle – Ursprung
+(G) Zentrum  
+(M) Richtung  
+(A) Wertfluss  
+(R) Continuum  
+(Z) Phase  
+(Q) Ursprung  
 
 ---
 
-## 3. Artikulation
-ARG3 artikuliert:
-- Achsen
-- Zustände
-- Bilder
-- Werte
-- Bedeutungen
+## 3. Codec‑Modus
+Der BORG‑Codec verbindet:
+- ARG3 → Artikulation
+- RESPO → Bewertung
+- QI → Intelligenz
+- IQQ → Qualitative Tiefe
+
+Er erzeugt maschinenlesbare Bedeutungen.
 
 ---
 
@@ -42,5 +46,6 @@ index.html
 ---
 
 ## 5. Zusammenfassung
-ARG3 ist simpel, klar und vektor‑gemäß.
-Es verbindet CSV und WEBP zu einem artikulierenden Modul.
+BORG‑TECH ist simpel, klar und vektor‑gemäß.
+Es assimilert BOOM, erweitert ARG3 und erzeugt einen Codec,
+der QI und IQQ für tiefe Zustandsanalyse nutzbar macht.

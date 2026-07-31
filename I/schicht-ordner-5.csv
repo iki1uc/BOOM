@@ -1,0 +1,6 @@
+﻿Schicht,Ordner,Aufgabe
+KI‑Layer,KI/128–1024,Apertus verarbeiten
+Vector‑Core,128–4096,Skalierung & Achsen
+AI‑Layer,AI/1024–4096,Output übertragen
+TMP‑Router,TMP → KI/AI,Auto‑Zuordnung
+Whirl‑Tech,Whirl/4096,High‑Speed‑Verteilung

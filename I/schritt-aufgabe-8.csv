@@ -1,0 +1,9 @@
+﻿Schritt,Aufgabe,Modul
+1. Axis‑Align,Achsen ausrichten,NC²
+2. Orbit‑Align,Umlauf stabilisieren,360°
+3. Energy‑Align,Energie stabilisieren,6E→6D
+4. Form‑Align,Geometrie stabilisieren,station‑geo‑11
+5. Meta‑Align,Meta‑Ebene stabilisieren,AXIOM
+6. Vector‑Align,Korrektur‑Vektor berechnen,STRING6D
+7. Angle‑Align,Fehlerwinkel bestimmen,NC²
+8. Compare‑Align,Ist/Soll vergleichen,NC²

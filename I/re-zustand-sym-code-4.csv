@@ -1,0 +1,5 @@
+﻿Re‑Zustand,SYM‑Code,Funktion,Achse
+Re‑Aktion,↗✦,Start / Impuls,Move‑Achse
+Re‑Flex,↘●,Gegenlauf / Grenze,Drift‑Achse
+Re‑Kurs,⊕▲,Kurs / Richtung,Shift‑Achse
+Re‑Level,⊗◇,Stabil / Speicher,Fix‑Achse

@@ -1,0 +1,5 @@
+﻿Siegtyp,Bedingung,Link
+Punkte‑Sieg,SCORE ≥ 120,Score
+KO‑Sieg,Damage ≥ 3,Damage
+Profi‑Sieg,PROF ≥ 40,Operator
+Continuum‑Überladung,COIN‑WERT ≥ 36,COIN

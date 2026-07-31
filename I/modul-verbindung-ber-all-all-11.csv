@@ -1,0 +1,12 @@
+﻿Modul,Verbindung über ALL×ALL
+6D,Geometrie‑Routing
+6E,Energie‑Routing
+NC²,Achsen‑Routing
+STRING6D,Form‑Routing
+PYRAMIDE,Level‑Routing
+AXIOM,Meta‑Routing
+ENGINE,System‑Routing
+CORE,Kern‑Routing
+SHELL,Außen‑Routing
+FIELD,Feld‑Routing
+SIGNAL,Signal‑Routing

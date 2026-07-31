@@ -1,0 +1,7 @@
+﻿Modul,Zweck,SDSA‑Beitrag
+TMP‑BUS,Rohdaten,SDSA lädt TMP‑Vector
+AXIS‑BUS,360° Achsen,SDSA liefert Achsen
+NC‑Link,Routing,SDSA wird durch KI/AI/SCALE/etc. gejagt
+RESPO,Stabilität,SDSA erzeugt RESPO‑A/B/C/D
+ANKER,Achsen‑Fix,SDSA liefert Achsen‑Material
+81‑System,Basis,SDSA ist der 81‑Snapshot

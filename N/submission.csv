@@ -1,0 +1,40 @@
+import pandas as pd
+from sklearn.model_selection import train_test_split
+from sklearn.linear_model import LogisticRegression
+from sklearn.metrics import accuracy_score
+
+# Daten laden
+train = pd.read_csv("/kaggle/input/titanic/train.csv")
+test  = pd.read_csv("/kaggle/input/titanic/test.csv")
+
+# Einfache Vorverarbeitung
+for df in [train, test]:
+    df["Sex"] = df["Sex"].map({"male": 0, "female": 1})
+    df["Embarked"].fillna("S", inplace=True)
+    df["Embarked"] = df["Embarked"].map({"S": 0, "C": 1, "Q": 2})
+    df["Age"].fillna(train["Age"].median(), inplace=True)
+    df["Fare"].fillna(train["Fare"].median(), inplace=True)
+
+features = ["Pclass", "Sex", "Age", "SibSp", "Parch", "Fare", "Embarked"]
+
+X = train[features]
+y = train["Survived"]
+
+# kleiner Check‑Split (optional)
+X_train, X_val, y_train, y_val = train_test_split(X, y, test_size=0.2, random_state=42)
+
+model = LogisticRegression(max_iter=1000)
+model.fit(X_train, y_train)
+
+y_pred = model.predict(X_val)
+print("Accuracy:", accuracy_score(y_val, y_pred))
+
+# Vorhersage für Test‑Set
+test_pred = model.predict(test[features])
+
+submission = pd.DataFrame({
+    "PassengerId": test["PassengerId"],
+    "Survived": test_pred
+})
+
+submission.to_csv("submission.csv", index=False)

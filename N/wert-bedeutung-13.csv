@@ -1,0 +1,14 @@
+﻿Wert,Bedeutung
+identität,REAL‑Identität
+nc_status,Scan‑Status
+nc_level,Scan‑Tiefe
+command,aktueller Befehl
+command_state,Befehls‑Status
+rom_size,ROM‑Größe
+rom_ready,ROM bereit
+winkel_deg,Richtung in Grad
+erfüllung_pct,Erfüllung in Prozent
+real_value,Real‑Intensität
+real_depth,Real‑Tiefe
+score,Gesamt‑Erfüllung
+kommentar,Statusmeldung

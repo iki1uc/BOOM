@@ -1,0 +1,10 @@
+﻿TMP‑Typ,Ziel,System
+tokenizer.tmp,KI/128,Apertus
+embed.tmp,KI/256,Apertus
+attn.tmp,KI/512,Apertus
+layer.tmp,KI/768,Apertus
+infer.tmp,AI/1024,Apertus → Vector
+vector.tmp,128–4096,Vector‑Core
+whirl.tmp,Whirl/4096,Whirl‑Tech
+transfer.tmp,AI/1536,Vector → Whirl
+cluster.tmp,AI/2048,Whirl → Vector

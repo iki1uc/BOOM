@@ -1,0 +1,9 @@
+﻿Bereich,Muss enthalten,Warum
+Orbit,"Elektron, Proton, Neutron, Orbit","Z‑Achse, V‑Achse, Triangle, OrbitSync"
+TMP,TMP.a–TMP.w,9×9‑Matrix (81.tmp)
+Vektor,"sum, avg, id",WSAD + REAL + RESPO
+Orbit‑Objekt,orbit{},TMP81 + RESPO_ID
+81.tmp,kompatible Struktur,SCAN_81 + UPDATE_STATION
+REAL,kompatible Werte,REAL_REASPO_SCAN
+WSAD,Σ‑Basis,Station.wsad
+Hyper,"sq, rt, sign",81tmp.hyper

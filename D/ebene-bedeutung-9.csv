@@ -1,0 +1,10 @@
+﻿Ebene,Bedeutung,Link
+1,ARG‑Basis,ARG
+2,XARG‑Basis,XARG
+3,RESPO‑Basis,RESPO_ARG_SCAN
+4,ARG‑Erweitert,ARG
+5,XARG‑Erweitert,XARG
+6,RESPO‑Erweitert,RESPO_ARG_SCAN
+7,ARG‑Meta,ARG
+8,XARG‑Meta,XARG
+9,RESPO‑Meta,RESPO_ARG_SCAN

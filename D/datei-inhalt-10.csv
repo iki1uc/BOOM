@@ -1,0 +1,11 @@
+﻿Datei,Inhalt,Status
+ACHSE.respo,Achsen‑Daten,✔
+Achse.html,Achsen‑Visual,✔
+ID.html,Identität,✔
+README.md,Beschreibung,✔
+index.html,Startseite,✔
+l.html,Lage,✔
+axis.html,Achsen‑Geometrie,✔ NEU
+tmp.html,TMP‑Geometrie,✔ NEU
+axi.html,Axiom‑Fusion,✔ NEU
+freq.html,Frequenz‑Stempel,✔ NEU

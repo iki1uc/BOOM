@@ -1,0 +1,20 @@
+﻿D‑Index,Name,Funktion
+D0,Root,Ursprung
+D1,Orbit,Meta‑Ebene
+D2,Wloch,Tiefenloch
+D3,Gate,Tor‑Ebene
+D4,Kanal,Datenfluss
+D5,ROM,Speicher‑Konstant
+D6,HTML,Render‑Ebene
+D7,RAM,volatile Ebene
+D8,CPU,Berechnung
+D9,CACHE,Wiederholungs‑Optimierung
+D10,SLI,Parallel‑Layer
+D11,UPG,Upgrade‑Pfad
+D12,UPD,Update‑Pfad
+D13,REV,Revision
+D14,EVO,Evolution
+D15,TRANS,Transformation
+D16,WARB,Warping‑Ebene
+D17,KANAL,Meta‑Kanal
+D18,Neue Ebene,Erweiterung

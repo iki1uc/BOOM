@@ -1,0 +1,9 @@
+﻿Datei,Bedeutung
+ZOOM.tmp.txt,"Temp‑Kernel, Boot‑Flag"
+zoom.line.txt,Linien‑Definitionen
+zoom.axis.txt,Achsen‑Matrix (X/Y/Z)
+zoom.color.txt,Farb‑Mapping
+zoom.mask.txt,Masken / Filter
+zoom.scan.txt,Scan‑Engine
+zoom.vector.txt,Vector‑Daten
+zoom.whirl.txt,Rotation / Wirbel‑Modul

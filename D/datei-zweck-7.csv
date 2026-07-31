@@ -1,0 +1,8 @@
+﻿Datei,Zweck,Warum wichtig
+index.html,Einstiegspunkt,RESPO lädt diese zuerst
+ID.html,Identität / Metadaten,NC erkennt das Modul
+chess.raw,Rohdaten,"Figuren, Felder, Regeln"
+chess.64,64‑Bit Brettlogik,schnelle KI‑Berechnung
+chess.6d,6‑Dimensionen,Ebenen‑System für NC
+chess.calc,Berechnung,"KI, Best Move, Status"
+chess.html,UI / Darstellung,"Replay, Anzeige"

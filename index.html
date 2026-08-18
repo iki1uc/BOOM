@@ -54,6 +54,7 @@
 </style>
 </head>
 <body>
+<button onclick="learnFromCSV()">CSV lernen</button>
 
 <h1>BOOM Indexer</h1>
 <p class="sub">Durchsucht automatisch alle Ordner im Repo und listet alle Dateien mit Vorschau, gruppiert nach Ordner.</p>
@@ -69,8 +70,44 @@
 <div id="grid-wrap"></div>
 
 <script>
+<script type="module">
+import { RESPO_CSV_LEARNER } from './RESPO_CSV_LEARNER.js';
+
 let allFiles = [];
 
+// ─────────────────────────────────────────────
+// CSV LEARNER
+// ─────────────────────────────────────────────
+async function learnFromCSV() {
+  const statusEl = document.getElementById('status');
+
+  try {
+    statusEl.textContent = "Lade CSV für RESPO-Learning...";
+
+    const response = await fetch('./4X/achse-bedeutung-4.csv');
+    const csvText = await response.text();
+
+    const result = RESPO_CSV_LEARNER.pipeline(csvText, {
+      axis: 'X',
+      narrative: 'TRANS bewegt'
+    });
+
+    statusEl.textContent =
+      "CSV-Learning abgeschlossen.\n" +
+      "Assimiliert: " + JSON.stringify(result.assimilated, null, 2) + "\n" +
+      "Gelernt: " + JSON.stringify(result.learned, null, 2) + "\n" +
+      "Response: " + JSON.stringify(result.response, null, 2);
+
+    return result;
+
+  } catch (err) {
+    statusEl.textContent = "Fehler beim CSV-Learning: " + err.message;
+  }
+}
+
+// ─────────────────────────────────────────────
+// GitHub API Loader
+// ─────────────────────────────────────────────
 async function ghFetch(url){
   const res = await fetch(url, { headers: { 'Accept': 'application/vnd.github+json' } });
   if(!res.ok){
@@ -98,7 +135,12 @@ async function loadRepoIndex(){
     const rootFiles = root.filter(f => f.type === 'file');
 
     if(rootFiles.length){
-      allFiles.push(...rootFiles.map(f => ({ ordner:'(root)', dateiname:f.name, url:f.download_url, typ: f.name.split('.').pop() })));
+      allFiles.push(...rootFiles.map(f => ({
+        ordner:'(root)',
+        dateiname:f.name,
+        url:f.download_url,
+        typ: f.name.split('.').pop()
+      })));
     }
 
     statusEl.textContent = `${folders.length} Ordner gefunden. Lade Inhalte...`;
@@ -107,9 +149,17 @@ async function loadRepoIndex(){
       try {
         const contents = await ghFetch(`https://api.github.com/repos/${owner}/${repo}/contents/${encodeURIComponent(folder.name)}`);
         const files = contents.filter(f => f.type === 'file');
-        allFiles.push(...files.map(f => ({ ordner: folder.name, dateiname: f.name, url: f.download_url, typ: f.name.split('.').pop().toLowerCase() })));
+
+        allFiles.push(...files.map(f => ({
+          ordner: folder.name,
+          dateiname: f.name,
+          url: f.download_url,
+          typ: f.name.split('.').pop().toLowerCase()
+        })));
+
         renderFolder(folder.name, files);
         statusEl.textContent = `Geladen: ${folder.name} (${files.length} Dateien)`;
+
       } catch(e){
         statusEl.textContent = `Fehler bei Ordner ${folder.name}: ${e.message}`;
       }
@@ -123,6 +173,9 @@ async function loadRepoIndex(){
   }
 }
 
+// ─────────────────────────────────────────────
+// Render Folder
+// ─────────────────────────────────────────────
 function renderFolder(name, files){
   const wrapEl = document.getElementById('grid-wrap');
   const section = document.createElement('div');
@@ -131,34 +184,29 @@ function renderFolder(name, files){
   const imageFiles = files.filter(f => /\.(webp|png|jpg|jpeg|gif)$/i.test(f.name));
   const otherFiles = files.filter(f => !/\.(webp|png|jpg|jpeg|gif)$/i.test(f.name));
 
-  let html = `<div class="folder-title">${name} <span class="folder-count">${files.length} Dateien</span></div><div class="grid">`;
+  let html = `
+    <div class="folder-title">
+      ${name} <span class="folder-count">${files.length} Dateien</span>
+    </div>
+    <div class="grid">
+  `;
+
   imageFiles.forEach(f => {
-    html += `<div class="card"><img src="${f.download_url}" loading="lazy" alt="${f.name}"><div class="fname">${f.name}</div></div>`;
+    html += `
+      <div class="card">
+        <img src="${f.download_url}" loading="lazy" alt="${f.name}">
+        <div class="fname">${f.name}</div>
+      </div>`;
   });
+
   otherFiles.forEach(f => {
-    html += `<div class="card"><div class="non-image">📄 ${f.name}</div></div>`;
+    html += `
+      <div class="card">
+        <div class="non-image">📄 ${f.name}</div>
+      </div>`;
   });
-  html += `</div>`;
 
-  section.innerHTML = html;
-  wrapEl.appendChild(section);
-}
-
-function exportCSV(){
-  const header = 'ordner,dateiname,typ,url\n';
-  const rows = allFiles.map(f => {
-    const esc = s => `"${(s||'').replace(/"/g,'""')}"`;
-    return [esc(f.ordner), esc(f.dateiname), esc(f.typ), esc(f.url)].join(',');
-  }).join('\n');
-  const blob = new Blob([header + rows], { type: 'text/csv;charset=utf-8;' });
-  const link = document.createElement('a');
-  link.href = URL.createObjectURL(blob);
-  link.download = 'boom-index.csv';
-  link.click();
-}
-
-loadRepoIndex();
-</script>
+  html +=
 
 </body>
 </html>

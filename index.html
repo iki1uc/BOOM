@@ -4,6 +4,7 @@
 <meta charset="utf-8">
 <title>BOOM Indexer</title>
 <meta name="viewport" content="width=device-width,initial-scale=1">
+
 <style>
   body {
     background:#0b0e14; color:#e2e8f0;
@@ -53,7 +54,9 @@
   #export-btn { margin-top:10px; }
 </style>
 </head>
+
 <body>
+
 <button onclick="learnFromCSV()">CSV lernen</button>
 
 <h1>BOOM Indexer</h1>
@@ -69,15 +72,12 @@
 <div id="status"></div>
 <div id="grid-wrap"></div>
 
-<script>
 <script type="module">
 import { RESPO_CSV_LEARNER } from './RESPO_CSV_LEARNER.js';
 
 let allFiles = [];
 
-// ─────────────────────────────────────────────
 // CSV LEARNER
-// ─────────────────────────────────────────────
 async function learnFromCSV() {
   const statusEl = document.getElementById('status');
 
@@ -105,9 +105,7 @@ async function learnFromCSV() {
   }
 }
 
-// ─────────────────────────────────────────────
 // GitHub API Loader
-// ─────────────────────────────────────────────
 async function ghFetch(url){
   const res = await fetch(url, { headers: { 'Accept': 'application/vnd.github+json' } });
   if(!res.ok){
@@ -118,95 +116,4 @@ async function ghFetch(url){
 
 async function loadRepoIndex(){
   const owner = document.getElementById('owner').value.trim();
-  const repo = document.getElementById('repo').value.trim();
-  const statusEl = document.getElementById('status');
-  const wrapEl = document.getElementById('grid-wrap');
-
-  if(!owner || !repo){ statusEl.textContent = 'Bitte User und Repo angeben.'; return; }
-
-  statusEl.textContent = 'Lade Ordnerstruktur...';
-  wrapEl.innerHTML = '';
-  document.getElementById('export-btn').disabled = true;
-  allFiles = [];
-
-  try {
-    const root = await ghFetch(`https://api.github.com/repos/${owner}/${repo}/contents`);
-    const folders = root.filter(f => f.type === 'dir');
-    const rootFiles = root.filter(f => f.type === 'file');
-
-    if(rootFiles.length){
-      allFiles.push(...rootFiles.map(f => ({
-        ordner:'(root)',
-        dateiname:f.name,
-        url:f.download_url,
-        typ: f.name.split('.').pop()
-      })));
-    }
-
-    statusEl.textContent = `${folders.length} Ordner gefunden. Lade Inhalte...`;
-
-    for(const folder of folders){
-      try {
-        const contents = await ghFetch(`https://api.github.com/repos/${owner}/${repo}/contents/${encodeURIComponent(folder.name)}`);
-        const files = contents.filter(f => f.type === 'file');
-
-        allFiles.push(...files.map(f => ({
-          ordner: folder.name,
-          dateiname: f.name,
-          url: f.download_url,
-          typ: f.name.split('.').pop().toLowerCase()
-        })));
-
-        renderFolder(folder.name, files);
-        statusEl.textContent = `Geladen: ${folder.name} (${files.length} Dateien)`;
-
-      } catch(e){
-        statusEl.textContent = `Fehler bei Ordner ${folder.name}: ${e.message}`;
-      }
-    }
-
-    statusEl.textContent = `Fertig. ${allFiles.length} Dateien insgesamt in ${folders.length} Ordnern gefunden.`;
-    document.getElementById('export-btn').disabled = false;
-
-  } catch(err){
-    statusEl.textContent = 'Fehler: ' + err.message;
-  }
-}
-
-// ─────────────────────────────────────────────
-// Render Folder
-// ─────────────────────────────────────────────
-function renderFolder(name, files){
-  const wrapEl = document.getElementById('grid-wrap');
-  const section = document.createElement('div');
-  section.className = 'folder-section';
-
-  const imageFiles = files.filter(f => /\.(webp|png|jpg|jpeg|gif)$/i.test(f.name));
-  const otherFiles = files.filter(f => !/\.(webp|png|jpg|jpeg|gif)$/i.test(f.name));
-
-  let html = `
-    <div class="folder-title">
-      ${name} <span class="folder-count">${files.length} Dateien</span>
-    </div>
-    <div class="grid">
-  `;
-
-  imageFiles.forEach(f => {
-    html += `
-      <div class="card">
-        <img src="${f.download_url}" loading="lazy" alt="${f.name}">
-        <div class="fname">${f.name}</div>
-      </div>`;
-  });
-
-  otherFiles.forEach(f => {
-    html += `
-      <div class="card">
-        <div class="non-image">📄 ${f.name}</div>
-      </div>`;
-  });
-
-  html +=
-
-</body>
-</html>
+  const repo

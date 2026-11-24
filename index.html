@@ -1,79 +1,344 @@
-<!DOCTYPE html><html lang="de"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>QI · IQQ Scanner · 12X · 360° · WER / WO</title>
-<style>:root{color-scheme:dark;--bg:#050805;--panel:#0b120d;--line:#294832;--green:#4ade80;--gold:#ffd700;--text:#e1ebe3;--muted:#9aaa9e;--red:#ff6b6b}
-*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--text);font:15px/1.5 system-ui,sans-serif}
-header{position:sticky;top:0;padding:14px 16px;background:#050805ed;border-bottom:1px solid var(--line)}
-h1{margin:0;color:var(--green);font-size:19px}main{width:min(100%,900px);margin:auto;padding:16px 14px}
-.card{border:1px solid var(--line);border-radius:14px;background:var(--panel);padding:14px;margin-bottom:12px}
-.label{color:var(--muted);font-size:12px;font-weight:800;letter-spacing:.08em}.small{color:var(--muted);font-size:13px}
-input{width:100%;min-height:44px;padding:10px;border:1px solid var(--line);border-radius:10px;background:var(--panel);color:var(--text);font:inherit;font-size:16px}
-button{min-height:44px;padding:10px 14px;border:1px solid var(--line);border-radius:10px;background:#102016;color:var(--text);font:inherit;cursor:pointer}
-button:hover{border-color:var(--green)} .green{color:var(--green);font-weight:700}.gold{color:var(--gold);font-weight:700}.red{color:var(--red);font-weight:700}
-.grid{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin:12px 0}
-.sektor{border:1px solid var(--line);border-radius:10px;padding:10px;text-align:center;cursor:pointer}
-.sektor.an{border-color:var(--green);background:#102016}.sektor.aus{border-color:var(--line)}
-.bar{height:14px;background:#050805;border:1px solid var(--line);border-radius:999px;overflow:hidden}.fill{height:100%;background:var(--green);width:0%;transition:width .3s}
-.row{display:flex;justify-content:space-between;gap:10px;padding:6px 0;border-bottom:1px solid var(--line)}.row:last-child{border:0}
-pre{white-space:pre-wrap;word-break:break-all;background:#050805;border:1px solid var(--line);border-radius:10px;padding:12px;font:12px/1.6 ui-monospace,Consolas,monospace;color:#c9d8cc}
-@media(max-width:560px){.grid{grid-template-columns:repeat(2,1fr)}}
-</style></head><body>
-<header><h1>QI · IQQ Scanner · 12X · 360°</h1><p class="small" style="margin:4px 0 0">Wer? Wo? 12 Sektoren × 30° = 360°. 100% nur wenn alle 12 stehen.</p></header>
-<main>
-<div class="card"><div class="label">WER / WO</div>
-<input id="wer" placeholder="WER … z. B. iki1uc / Bestimmer"><br><br>
-<input id="wo" placeholder="WO … z. B. 4X / D / SEND / 1.html"><br><br>
-<button id="scan">⦿ SCAN START</button> <button id="reset">⟲ RESET</button>
-<p class="small" id="werwo">WER: — · WO: —</p></div>
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>QI · IQQ Scanner · 12X · 360° · WER / WO</title>
+  <style>
+    :root {
+      color-scheme: dark;
+      --bg: #050805;
+      --panel: #0b120d;
+      --line: #294832;
+      --green: #4ade80;
+      --gold: #ffd700;
+      --text: #e1ebe3;
+      --muted: #9aaa9e;
+      --red: #ff6b6b;
+    }
 
-<div class="card"><div class="label">12X · 360° · TIPPE SEKTOR AN = GEPRÜFT</div>
-<div class="grid" id="grid"></div>
-<div class="bar"><div class="fill" id="fill"></div></div>
-<p><b id="pct">0%</b> · <span id="count">0 / 12 Sektoren</span> · <span id="state" class="red">NICHT 100%</span></p>
-<div class="row"><span>QI</span><span id="qi">0</span></div>
-<div class="row"><span>IQQ</span><span id="iqq">0</span></div>
-<div class="row"><span>360°</span><span id="grad">0° / 360°</span></div>
-<pre id="out">Bereit. Tippe 12 Sektoren an. Erst bei 12/12 steht 100%.</pre></div>
+    * { box-sizing: border-box; }
 
-<div class="card"><div class="label">REGEL</div>
-<p class="small">12 Sektoren: 0° Wort · 30° Bild · 60° Kette · 90° Version · 120° Ordner · 150° WER · 180° WO · 210° HALT · 240° PRIV · 270° ANONYM · 300° 18+ · 330° FINAL.<br>
-QI = geprüft / 12 × 100. IQQ = QI − Lücken × 10. Nur 12/12 = 100% = 360° erreicht. Kein Schummeln, kein „fast 100".<br>
-Nichts gelöscht. Nur gescannt. Alle in Ketten.</p>
-<p><a href="boom-ketten.html" style="color:var(--green)">← BOOM Ketten</a> · <a href="index.html" style="color:var(--green)">Master Mobile</a></p></div>
-</main>
-<script>"use strict";
-const $=id=>document.getElementById(id);
-const namen=["0° Wort","30° Bild","60° Kette","90° Version","120° Ordner","150° WER","180° WO","210° HALT","240° PRIV","270° ANONYM","300° 18+","330° FINAL"];
-const an=new Array(12).fill(false);
-const grid=$("grid");
-namen.forEach((n,i)=>{
-  const d=document.createElement("div");d.className="sektor aus";d.textContent=n;
-  d.addEventListener("click",()=>{an[i]=!an[i];d.className="sektor "+(an[i]?"an":"aus");d.textContent=(an[i]?"✓ ":"")+n;render();});
-  grid.append(d);
-});
-function render(){
-  const c=an.filter(Boolean).length;
-  const pct=Math.round(c/12*100);
-  const luecken=12-c;
-  const qiq=pct;
-  const iqq=Math.max(0,qiq-luecken*0); // IQQ = QI, wenn Lücken nur über QI zählen — ehrlich, kein Abzug-Trick
-  $("pct").textContent=pct+"%";
-  $("count").textContent=c+" / 12 Sektoren";
-  $("fill").style.width=pct+"%";
-  $("grad").textContent=(c*30)+"° / 360°";
-  $("qi").textContent=qiq;
-  $("iqq").textContent=iqq;
-  $("state").textContent=pct===100?"100% ERREICHT · 360° VOLL":"NICHT 100%";
-  $("state").className=pct===100?"green":"red";
-  const wer=$("wer").value.trim()||"—", wo=$("wo").value.trim()||"—";
-  $("werwo").textContent="WER: "+wer+" · WO: "+wo;
-  $("out").textContent = pct===100
-    ? "⦿ 100% ERREICHT\nWER: "+wer+"\nWO: "+wo+"\n12/12 · 360° voll · QI 100 · IQQ 100\nAlle in Ketten. Eye + Brain open."
-    : "SCAN: "+c+"/12 · "+pct+"% · "+(c*30)+"°\nWER: "+wer+"\nWO: "+wo+"\nFehlt: "+(12-c)+" Sektoren. Kein 100% ohne alle 12.";
-}
-$("scan").addEventListener("click",render);
-$("reset").addEventListener("click",()=>{
-  an.fill(false);$("wer").value="";$("wo").value="";
-  document.querySelectorAll(".sektor").forEach((d,i)=>{d.className="sektor aus";d.textContent=namen[i];});
-  render();
-});
-render();
-</script></body></html>
+    body {
+      margin: 0;
+      background: var(--bg);
+      color: var(--text);
+      font: 15px/1.5 system-ui, sans-serif;
+    }
+
+    header {
+      position: sticky;
+      top: 0;
+      z-index: 1;
+      padding: 14px 16px;
+      background: #050805ed;
+      border-bottom: 1px solid var(--line);
+    }
+
+    h1 {
+      margin: 0;
+      color: var(--green);
+      font-size: 19px;
+    }
+
+    main {
+      width: min(100%, 900px);
+      margin: auto;
+      padding: 16px 14px;
+    }
+
+    .card {
+      margin-bottom: 12px;
+      padding: 14px;
+      border: 1px solid var(--line);
+      border-radius: 14px;
+      background: var(--panel);
+    }
+
+    .label {
+      color: var(--muted);
+      font-size: 12px;
+      font-weight: 800;
+      letter-spacing: .08em;
+    }
+
+    .small {
+      color: var(--muted);
+      font-size: 13px;
+    }
+
+    input {
+      width: 100%;
+      min-height: 44px;
+      padding: 10px;
+      border: 1px solid var(--line);
+      border-radius: 10px;
+      background: var(--panel);
+      color: var(--text);
+      font: inherit;
+      font-size: 16px;
+    }
+
+    button {
+      min-height: 44px;
+      padding: 10px 14px;
+      border: 1px solid var(--line);
+      border-radius: 10px;
+      background: #102016;
+      color: var(--text);
+      font: inherit;
+      cursor: pointer;
+    }
+
+    button:hover,
+    button:focus-visible {
+      border-color: var(--green);
+    }
+
+    button:focus-visible,
+    input:focus-visible,
+    .sektor:focus-visible {
+      outline: 2px solid var(--gold);
+      outline-offset: 2px;
+    }
+
+    .green { color: var(--green); font-weight: 700; }
+    .gold { color: var(--gold); font-weight: 700; }
+    .red { color: var(--red); font-weight: 700; }
+
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 8px;
+      margin: 12px 0;
+    }
+
+    .sektor {
+      min-height: 44px;
+      padding: 10px;
+      border: 1px solid var(--line);
+      border-radius: 10px;
+      background: transparent;
+      color: var(--text);
+      text-align: center;
+      cursor: pointer;
+    }
+
+    .sektor.an {
+      border-color: var(--green);
+      background: #102016;
+    }
+
+    .bar {
+      height: 14px;
+      overflow: hidden;
+      border: 1px solid var(--line);
+      border-radius: 999px;
+      background: #050805;
+    }
+
+    .fill {
+      width: 0%;
+      height: 100%;
+      background: var(--green);
+      transition: width .3s ease;
+    }
+
+    .row {
+      display: flex;
+      justify-content: space-between;
+      gap: 10px;
+      padding: 6px 0;
+      border-bottom: 1px solid var(--line);
+    }
+
+    .row:last-child { border: 0; }
+
+    pre {
+      padding: 12px;
+      border: 1px solid var(--line);
+      border-radius: 10px;
+      background: #050805;
+      color: #c9d8cc;
+      font: 12px/1.6 ui-monospace, Consolas, monospace;
+      white-space: pre-wrap;
+      overflow-wrap: anywhere;
+    }
+
+    @media (max-width: 560px) {
+      .grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>QI · IQQ Scanner · 12X · 360°</h1>
+    <p class="small" style="margin:4px 0 0">
+      Wer? Wo? 12 Sektoren × 30° = 360°. 100 % nur bei 12 bestätigten Sektoren.
+    </p>
+  </header>
+
+  <main>
+    <section class="card" aria-labelledby="wer-wo-title">
+      <div class="label" id="wer-wo-title">WER / WO</div>
+      <label class="small" for="wer">WER</label>
+      <input id="wer" autocomplete="off" placeholder="z. B. iki1uc / Bestimmer">
+
+      <label class="small" for="wo" style="display:block;margin-top:12px">WO</label>
+      <input id="wo" autocomplete="off" placeholder="z. B. 4X / D / SEND / 1.html">
+
+      <div style="display:flex;gap:8px;flex-wrap:wrap;margin-top:12px">
+        <button id="scan" type="button">⦿ SCAN START</button>
+        <button id="reset" type="button">⟲ RESET</button>
+      </div>
+
+      <p class="small" id="werwo">WER: — · WO: —</p>
+    </section>
+
+    <section class="card" aria-labelledby="scanner-title">
+      <div class="label" id="scanner-title">
+        12X · 360° · SEKTOR ANTIPpen = MANUELL BESTÄTIGT
+      </div>
+
+      <div class="grid" id="grid" aria-label="12 Scanner-Sektoren"></div>
+
+      <div
+        class="bar"
+        role="progressbar"
+        aria-label="Bestätigte Sektoren"
+        aria-valuemin="0"
+        aria-valuemax="12"
+        aria-valuenow="0"
+        id="progress"
+      >
+        <div class="fill" id="fill"></div>
+      </div>
+
+      <p>
+        <b id="pct">0 %</b> ·
+        <span id="count">0 / 12 Sektoren</span> ·
+        <span id="state" class="red" aria-live="polite">NICHT VOLLSTÄNDIG</span>
+      </p>
+
+      <div class="row"><span>QI</span><span id="qi">0</span></div>
+      <div class="row"><span>IQQ</span><span id="iqq">0</span></div>
+      <div class="row"><span>Winkel</span><span id="grad">0° / 360°</span></div>
+
+      <pre id="out" aria-live="polite">Bereit. Bestätige die Sektoren manuell.</pre>
+    </section>
+
+    <section class="card" aria-labelledby="regel-title">
+      <div class="label" id="regel-title">REGEL</div>
+      <p class="small">
+        12 Sektoren: 0° Wort · 30° Bild · 60° Kette · 90° Version ·
+        120° Ordner · 150° WER · 180° WO · 210° HALT · 240° PRIV ·
+        270° ANONYM · 300° 18+ · 330° FINAL.
+      </p>
+      <p class="small">
+        QI = bestätigte Sektoren / 12 × 100.
+        IQQ = max(0, QI − fehlende Sektoren × 10).
+        100 % bedeutet, dass alle 12 Sektoren manuell bestätigt wurden;
+        die Eingaben werden dadurch nicht unabhängig verifiziert.
+      </p>
+      <p class="small">
+        Diese Seite speichert oder löscht keine Daten.
+        „18+“ ist eine manuelle Bestätigung, keine Altersprüfung.
+      </p>
+      <p>
+        <a href="boom-ketten.html" style="color:var(--green)">← BOOM Ketten</a>
+        ·
+        <a href="index.html" style="color:var(--green)">Master Mobile</a>
+      </p>
+    </section>
+  </main>
+
+  <script>
+    "use strict";
+
+    const $ = (id) => document.getElementById(id);
+
+    const namen = [
+      "0° Wort", "30° Bild", "60° Kette", "90° Version",
+      "120° Ordner", "150° WER", "180° WO", "210° HALT",
+      "240° PRIV", "270° ANONYM", "300° 18+", "330° FINAL"
+    ];
+
+    const bestaetigt = new Array(namen.length).fill(false);
+    const grid = $("grid");
+
+    namen.forEach((name, index) => {
+      const button = document.createElement("button");
+      button.type = "button";
+      button.className = "sektor";
+      button.setAttribute("aria-pressed", "false");
+      button.textContent = name;
+
+      button.addEventListener("click", () => {
+        bestaetigt[index] = !bestaetigt[index];
+        button.classList.toggle("an", bestaetigt[index]);
+        button.setAttribute("aria-pressed", String(bestaetigt[index]));
+        button.textContent = (bestaetigt[index] ? "✓ " : "") + name;
+        render();
+      });
+
+      grid.appendChild(button);
+    });
+
+    function render() {
+      const count = bestaetigt.filter(Boolean).length;
+      const missing = namen.length - count;
+      const qi = Math.round((count / namen.length) * 100);
+      const iqq = Math.max(0, qi - missing * 10);
+      const degrees = count * 30;
+      const complete = count === namen.length;
+      const wer = $("wer").value.trim() || "—";
+      const wo = $("wo").value.trim() || "—";
+
+      $("pct").textContent = qi + " %";
+      $("count").textContent = count + " / 12 Sektoren";
+      $("fill").style.width = qi + "%";
+      $("progress").setAttribute("aria-valuenow", String(count));
+      $("grad").textContent = degrees + "° / 360°";
+      $("qi").textContent = String(qi);
+      $("iqq").textContent = String(iqq);
+      $("state").textContent = complete
+        ? "12/12 MANUELL BESTÄTIGT"
+        : "NICHT VOLLSTÄNDIG";
+      $("state").className = complete ? "green" : "red";
+      $("werwo").textContent = "WER: " + wer + " · WO: " + wo;
+
+      $("out").textContent = [
+        complete ? "⦿ VOLLSTÄNDIG: 12/12 manuell bestätigt" : "SCAN-STATUS: NICHT VOLLSTÄNDIG",
+        "WER: " + wer,
+        "WO: " + wo,
+        "QI: " + qi + " · IQQ: " + iqq,
+        "Winkel: " + degrees + "° / 360°",
+        complete
+          ? "Alle Sektoren wurden manuell bestätigt. Inhalte wurden nicht unabhängig geprüft."
+          : "Noch offen: " + missing + " Sektor(en)."
+      ].join("\n");
+    }
+
+    $("scan").addEventListener("click", render);
+
+    $("wer").addEventListener("input", render);
+    $("wo").addEventListener("input", render);
+
+    $("reset").addEventListener("click", () => {
+      bestaetigt.fill(false);
+      $("wer").value = "";
+      $("wo").value = "";
+
+      document.querySelectorAll(".sektor").forEach((button, index) => {
+        button.classList.remove("an");
+        button.setAttribute("aria-pressed", "false");
+        button.textContent = namen[index];
+      });
+
+      render();
+    });
+
+    render();
+  </script>
+</body>
+</html>
